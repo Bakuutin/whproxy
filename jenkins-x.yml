@@ -15,17 +15,14 @@ pipelineConfig:
         - name: everything-else
           steps:
           - args:
-            - --cache=true
-            - --cache-dir=/workspace
             - --context=/workspace/source
             - --dockerfile=/workspace/source/Dockerfile
-            - --destination=gcr.io/bakuutin/whproxy:${inputs.params.version}
-            - --cache-repo=gcr.io/bakuutin/cache
+            - --destination=docker-registry.jx.dev.friendzone.bot/bakuutin/whproxy:${inputs.params.version}
             command: /kaniko/executor
             dir: /workspace/source
             image: gcr.io/kaniko-project/executor:9912ccbf8d22bbafbf971124600fbb0b13b9cbd6
             name: build-container-build
-          - command: jx step post build --image gcr.io/bakuutin/whproxy:$PREVIEW_VERSION
+          - command: jx step post build --image docker-registry.jx.dev.friendzone.bot/bakuutin/whproxy:$PREVIEW_VERSION
             name: postbuild-post-build
           - command: make preview
             dir: /workspace/source/charts/preview
@@ -47,17 +44,14 @@ pipelineConfig:
         - name: everything-else
           steps:
           - args:
-            - --cache=true
-            - --cache-dir=/workspace
             - --context=/workspace/source
             - --dockerfile=/workspace/source/Dockerfile
-            - --destination=gcr.io/bakuutin/whproxy:${inputs.params.version}
-            - --cache-repo=gcr.io/bakuutin/cache
+            - --destination=docker-registry.jx.dev.friendzone.bot/bakuutin/whproxy:${inputs.params.version}
             command: /kaniko/executor
             dir: /workspace/source
             image: gcr.io/kaniko-project/executor:9912ccbf8d22bbafbf971124600fbb0b13b9cbd6
             name: build-container-build
-          - command: jx step post build --image gcr.io/bakuutin/whproxy:${VERSION}
+          - command: jx step post build --image docker-registry.jx.dev.friendzone.bot/bakuutin/whproxy:${VERSION}
             name: build-post-build
           - command: jx step changelog --version v${VERSION}
             name: promote-changelog
